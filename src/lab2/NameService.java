@@ -38,7 +38,7 @@ public class NameService {
      * @param fullName - a name containing a first name and a last name
      * @return the first name
      */
-    private String extractFirstName(String fullName) throws IllegalArgumentException {
+    private String extractFirstName(String fullName) throws RuntimeException {
         String[] nameParts = fullName.split(" ");
         if (nameParts[0].length() > maxFirstNameLength || nameParts[0].length() < minFirstNameLength) {
             throw new IllegalArgumentException("Invalid first name has been entered!");
@@ -57,21 +57,21 @@ public class NameService {
     }
 
     //determine min and max for first name and last name from employer.  Ask employer if we should allow nulls.  Ask employer if we should allow numbers
-    public String[] fullNameValidator(String fullName) throws IllegalArgumentException {
+    public final String fullNameValidator(String fullName) throws RuntimeException {
         String[] nameParts = fullName.split(" ");
         String[] twoPartFullName = new String[2];
         char[] individualChars = fullName.toCharArray();
         for (char individualChar : individualChars) {
             if (Character.isDigit(individualChar)) {
-                throw new IllegalArgumentException("You can not have numbers in your fisrt name or last name");
+                throw new IllegalArgumentException("You cannot have any numbers in your full name!");
             }
         }
-        if (fullName == null || fullName.isEmpty() || fullName.indexOf("-") != -1 || nameParts.length < 2) {
-            throw new IllegalArgumentException("You have entered an invalid first name or you have entered an invalid last name!");
+        if(fullName == null ){
+            throw new NullPointerException("You must enter a value");
+        }else if (fullName.isEmpty() || fullName.contains("-") || nameParts.length < 2) {
+            throw new IllegalArgumentException("You not entered a valid first and last name");
         }
-        twoPartFullName[0] = extractFirstName(fullName);
-        twoPartFullName[1] = extractLastName(fullName);
-        return nameParts;
+        String lastName = extractLastName(fullName);
+        return lastName;
     }
-
 }

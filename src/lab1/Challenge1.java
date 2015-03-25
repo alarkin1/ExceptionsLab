@@ -27,18 +27,21 @@ public class Challenge1 {
             String lastName = app.extractLastName(fullName);
             String msg = "Your last name is: " + lastName;
             JOptionPane.showMessageDialog(null, msg);
-        } catch (IllegalArgumentException iae) {
+        } catch (RuntimeException re) {
             //use appropriate output class and method
-            System.out.println(iae.getMessage());
+            JOptionPane.showMessageDialog(null, re.getMessage(), null, JOptionPane.ERROR_MESSAGE);
         }
     }
 
     //Ask employer if the firstname or lastname can have a number
-    public String extractLastName(String fullName) throws IllegalArgumentException {
+    public final String extractLastName(String fullName) throws RuntimeException {
         String[] nameParts = fullName.split(" ");
-        if (fullName == null || fullName.isEmpty() || nameParts.length < 2 || nameParts.length > 4) {
+        
+        if (fullName == null) {
+            throw new NullPointerException("Name has not been entered");
+        }else if (fullName.isEmpty() || nameParts.length < 2 || nameParts.length > 4) {
             throw new IllegalArgumentException("You have not entered a valid first name last name combination!");
-        }
+        } 
         return nameParts[nameParts.length - 1];
     }
 

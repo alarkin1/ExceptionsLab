@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
  * @version 1.00
  */
 public class InputOutputGui {
+
     private NameService nameService;
 
     public InputOutputGui() {
@@ -16,12 +17,18 @@ public class InputOutputGui {
     }
 
     public final void startConversation() {
-        
+
         String fullName = JOptionPane.showInputDialog("Enter full name:");
-        String lastName = nameService.extractLastName(fullName);
-        String msg = "Your last name is: " + lastName;
-        JOptionPane.showMessageDialog(null, msg);
-        
+        String lastName;
+        try {
+            lastName = nameService.fullNameValidator(fullName);
+            String msg = "Your last name is: " + lastName;
+            JOptionPane.showMessageDialog(null, msg);
+        } catch (RuntimeException re) {
+            //output to the appropriate output class
+            JOptionPane.showMessageDialog(null, re.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+            startConversation();
+        }
     }
-     
+
 }

@@ -31,7 +31,7 @@ public class Startup {
                     + " " + emp.getLastName().toUpperCase();
 
         } catch (IllegalArgumentException iea) {
-            //output error to output using the appropriate output class or error handling class
+            //output error the appropriate output class or error handling class
             System.out.println(iea.getMessage());
         }
     }

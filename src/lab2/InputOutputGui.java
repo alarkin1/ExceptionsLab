@@ -21,15 +21,14 @@ public class InputOutputGui {
         String fullName = JOptionPane.showInputDialog("Enter full name:");
         String lastName = "";
         try {
-            lastName = nameService.fullNameValidator(fullName)[1];
-        } catch (IllegalArgumentException iae) {
+            lastName = nameService.fullNameValidator(fullName);
+            String msg = "Your last name is: " + lastName;
+            JOptionPane.showMessageDialog(null, msg);
+        } catch (RuntimeException re) {
             //output to the appropriate output class
-            System.out.println(iae.getMessage());
+            JOptionPane.showMessageDialog(null, re.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+            startConversation();
         }
-
-        String msg = "Your last name is: " + lastName;
-        JOptionPane.showMessageDialog(null, msg);
-
     }
 
 }
